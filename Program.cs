@@ -1,78 +1,56 @@
 ﻿// See https://aka.ms/new-console-template for more information
-
-class Vehicle
+class Shape
 {
-    public string Brand;
-    public int Year;
-    public Vehicle(string brand, int year)
+    public virtual double CalculateArea()
     {
-        Brand = brand;
-        Year = year;
+        return 0;
     }
-    public void Start()
+    class Circle : Shape
     {
-        Console.WriteLine(Brand + " is starting.");
-    }
-
-    class Car : Vehicle
-    {
-
-        public int NumberOfDoors;
-        public Car(string brand, int year, int numberOfDoors)
-            : base(brand, year)
+        public double Radius { get; set; }
+        public Circle(double radius)
         {
-            NumberOfDoors = numberOfDoors;
+            Radius = radius;
         }
-
-    }
-    class Bus : Vehicle
-    {
-        public int Capacity;
-        public Bus(string brand, int year, int capacity)
-            : base(brand, year)
-
+        public override double CalculateArea()
         {
-            Capacity = capacity;
+            return Math.PI * Radius * Radius;
         }
+    }
 
-        class Motorcycle : Vehicle
+    class Rectangle : Shape
+    {
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public Rectangle(double width, double height)
         {
+            Width = width;
+            Height = height;
+        }
+        public override double CalculateArea()
+        {
+            return Width * Height;
 
-            public bool HasSidecar;
-            public Motorcycle(string brand, int year, bool
-            hasSidecar)
-            : base(brand, year)
-            {
-                HasSidecar = hasSidecar;
-            }
 
-            class Program
-            {
-            }
-            static void Main()
-            {
 
-                Car car1 = new Car("BMW", 2024, 4);
-                Bus bus1 = new Bus("Mercedes", 2022, 50);
-                Motorcycle moto1 = new Motorcycle("Honda", 2023, false);
-                Console.WriteLine("Car: " + car1.Brand);
-                Console.WriteLine("Year: " + car1.Year);
-                Console.WriteLine("Doors: " +
-                car1.NumberOfDoors);
-                car1.Start();
-                Console.WriteLine();
-                Console.WriteLine("Bus: " + bus1.Brand);
-                Console.WriteLine("Year: " + bus1.Year);
-                Console.WriteLine("Capacity: " + bus1.Capacity);
-                bus1.Start();
-                Console.WriteLine();
-                Console.WriteLine("Motorcycle: " +
-                moto1.Brand);
-                Console.WriteLine("Year: " + moto1.Year);
-                Console.WriteLine("Has Sidecar: " + moto1.HasSidecar);
-                moto1.Start();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Shape> shapes = new List<Shape>()
+            {
+                new Circle(5),
+                new Rectangle(4, 6)
+            };
+            foreach(Shape shape in shapes)
+            {
+                Console.WriteLine($"Type: {shape.GetType().Name}, Area: {shape.CalculateArea()}");
+            
+                Console.ReadKey();
             }
         }
     }
 }
-
